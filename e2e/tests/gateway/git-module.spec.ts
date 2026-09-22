@@ -24,28 +24,27 @@ test("Git module lists the commissioned sample project", async ({ page }) => {
     exact: true,
   });
 
-  if (await loginButton.isVisible().catch(() => false)) {
-    await Promise.all([
-      page.waitForResponse((response) =>
-        response.url().includes("/authn/next-challenge")
-      ),
-      loginButton.click(),
-    ]);
+  await loginButton.waitFor({ state: "visible" });
+  await Promise.all([
+    page.waitForResponse((response) =>
+      response.url().includes("/authn/next-challenge")
+    ),
+    loginButton.click(),
+  ]);
 
-    const usernameInput = page.locator('input[name="username"]');
-    await usernameInput.waitFor({ state: "visible" });
-    await usernameInput.fill(username);
-    await page.locator("div.submit-button").click();
+  const usernameInput = page.locator('input[name="username"]');
+  await usernameInput.waitFor({ state: "visible" });
+  await usernameInput.fill(username);
+  await page.locator("div.submit-button").click();
 
-    await page.locator('input[name="password"]').fill(password);
-    await Promise.all([
-      page.waitForResponse((response) =>
-        response.url().includes("/authn/next-challenge")
-      ),
-      page.locator("div.submit-button").click(),
-    ]);
-    await page.waitForURL((url) => !url.pathname.includes("/authn/login"));
-  }
+  await page.locator('input[name="password"]').fill(password);
+  await Promise.all([
+    page.waitForResponse((response) =>
+      response.url().includes("/authn/next-challenge")
+    ),
+    page.locator("div.submit-button").click(),
+  ]);
+  await page.waitForURL((url) => !url.pathname.includes("/authn/login"));
 
   const projectsResponse = page.waitForResponse(
     (response) =>
