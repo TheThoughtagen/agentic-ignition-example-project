@@ -29,17 +29,11 @@ export default defineConfig({
     },
     {
       name: "chromium",
-      testIgnore: /gateway\//,
       use: {
         ...devices["Desktop Chrome"],
         storageState: path.resolve(__dirname, ".auth/user.json"),
       },
       dependencies: ["setup"],
-    },
-    {
-      name: "gateway-chromium",
-      testMatch: /gateway\/.*\.spec\.ts/,
-      use: devices["Desktop Chrome"],
     },
   ],
 });
