@@ -24,6 +24,8 @@ ign testing run --project example-project
 
 Git-module Gateway UI coverage lives in the stack repo's `e2e/`. This repo's Playwright smoke tests cover the Home view and Perspective session.
 
+The optional, local-only work-order example is mapped at `/work-orders`. Its Jython code reads a simulated CMMS service and writes to a PostgreSQL connection named `work_order_demo`; both services are provided by the stack's Docker Compose configuration. Run the stack's demo setup before trying that view or its integration tests. The sample's `work-order-tests` WebDev endpoint returns seven Gateway-side assertions; it is only for the disposable, loopback-bound development gateway.
+
 ## License
 
 Apache-2.0

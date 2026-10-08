@@ -3,6 +3,10 @@
     "/": {
       "title": "Home",
       "viewPath": "Home"
+    },
+    "/work-orders": {
+      "title": "Work-order triage",
+      "viewPath": "Example/WorkOrders"
     }
   },
   "sharedDocks": {

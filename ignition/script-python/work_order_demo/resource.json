@@ -1,13 +1,15 @@
 {
-  "scope": "G",
-  "version": 2,
+  "scope": "A",
+  "version": 4,
   "restricted": false,
   "overridable": true,
-  "files": ["config.json"],
+  "files": [
+    "code.py"
+  ],
   "attributes": {
     "lastModification": {
       "actor": "external",
-      "timestamp": "2026-10-03T00:00:00Z"
+      "timestamp": "2026-10-07T00:00:00Z"
     }
   }
 }
