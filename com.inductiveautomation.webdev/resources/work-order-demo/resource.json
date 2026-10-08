@@ -1,13 +1,17 @@
 {
   "scope": "G",
-  "version": 2,
+  "version": 1,
   "restricted": false,
   "overridable": true,
-  "files": ["config.json"],
+  "files": [
+    "config.json",
+    "doPost.py",
+    "doGet.py"
+  ],
   "attributes": {
     "lastModification": {
       "actor": "external",
-      "timestamp": "2026-10-03T00:00:00Z"
+      "timestamp": "2026-10-07T00:00:00Z"
     }
   }
 }
