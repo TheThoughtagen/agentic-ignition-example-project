@@ -9,3 +9,6 @@ def doPost(request, session):
 	except ValueError as exc:
 		request["servletResponse"].setStatus(400)
 		return {"json": {"error": str(exc)}}
+	except work_order_demo.CMMSUnavailable as exc:
+		request["servletResponse"].setStatus(502)
+		return {"json": {"error": str(exc)}}

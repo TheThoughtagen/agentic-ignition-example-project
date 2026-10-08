@@ -4,6 +4,10 @@ API_URL = "http://work-orders-api:8090"
 DATABASE = "work_order_demo"
 
 
+class CMMSUnavailable(Exception):
+	"""An upstream CMMS request or response failed (not a bad work-order ID)."""
+
+
 def classify(priority, status):
 	"""Pure decision rule; deliberately easy to alter live and retest."""
 	if status != "open":
@@ -24,12 +28,20 @@ def validate_id(order_id):
 def fetch_order(order_id):
 	"""Fetch one known work order over the Compose-internal network."""
 	order_id = validate_id(order_id)
-	response = system.net.httpClient(timeout=5000).get("{}/work-orders/{}".format(API_URL, order_id))
+	try:
+		response = system.net.httpClient(timeout=5000).get("{}/work-orders/{}".format(API_URL, order_id))
+	except Exception:
+		raise CMMSUnavailable("CMMS request failed")
 	if response.statusCode != 200:
-		raise ValueError("CMMS request failed with HTTP {}".format(response.statusCode))
-	order = system.util.jsonDecode(response.text)
-	if order.get("id") != order_id:
-		raise ValueError("CMMS response ID mismatch")
+		raise CMMSUnavailable("CMMS request failed with HTTP {}".format(response.statusCode))
+	try:
+		order = system.util.jsonDecode(response.text)
+		if order.get("id") != order_id:
+			raise CMMSUnavailable("CMMS response ID mismatch")
+	except CMMSUnavailable:
+		raise
+	except Exception:
+		raise CMMSUnavailable("Invalid CMMS response")
 	return order
 
 
